@@ -1,0 +1,934 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Wylker Reis · QA Sênior (SDET)</title>
+<meta name="description" content="Portfólio de Wylker Reis, Analista de QA Sênior (SDET). Quase 7 anos em automação de testes, APIs e performance em bancos e empresas de tecnologia.">
+<link rel="canonical" href="https://wylkerreis.github.io/">
+<link rel="icon" href="favicon.svg" type="image/svg+xml">
+<meta name="theme-color" content="#F4F5F7" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0A0F1C" media="(prefers-color-scheme: dark)">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wylkerreis.github.io/">
+<meta property="og:title" content="Wylker Reis · QA Sênior (SDET)">
+<meta property="og:description" content="Portfólio de Wylker Reis, Analista de QA Sênior (SDET). Quase 7 anos em automação de testes, APIs e performance em bancos e empresas de tecnologia.">
+<meta property="og:image" content="https://wylkerreis.github.io/og.png">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Wylker Reis, QA Sênior (SDET), ao lado de um terminal com 28 testes passando">
+<meta property="og:locale" content="pt_BR">
+<meta property="og:locale:alternate" content="en_US">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Geist:wght@400;500;600;700&family=Geist+Mono:wght@400;500;600&display=swap">
+<style>
+  :root {
+    --bg: #F4F5F7;
+    --surface: #FFFFFF;
+    --surface-2: #ECEEF2;
+    --ink: #0F1729;
+    --ink-muted: #4A5468;
+    --line: #D9DDE5;
+    --line-strong: #A7AFBF;
+    --accent: #2945C4;
+    --accent-soft: #E4E9FB;
+    --pass: #176B42;
+    --pass-soft: #E1F2E8;
+    --fail: #B03A3A;
+    --fail-soft: #F8E5E5;
+    --pending: #B5BCCB;
+    --shadow: rgba(15, 23, 41, .10);
+    color-scheme: light;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+      --bg: #0A0F1C;
+      --surface: #111829;
+      --surface-2: #182135;
+      --ink: #E7EBF5;
+      --ink-muted: #A2ACC2;
+      --line: #25304A;
+      --line-strong: #3D4A68;
+      --accent: #93A8FF;
+      --accent-soft: #1D2748;
+      --pass: #5CCB94;
+      --pass-soft: #14301F;
+      --fail: #FF8F8F;
+      --fail-soft: #3A1C22;
+      --pending: #3D4A68;
+      --shadow: rgba(0, 0, 0, .35);
+      color-scheme: dark;
+    }
+  }
+  :root[data-theme="dark"] {
+    --bg: #0A0F1C;
+    --surface: #111829;
+    --surface-2: #182135;
+    --ink: #E7EBF5;
+    --ink-muted: #A2ACC2;
+    --line: #25304A;
+    --line-strong: #3D4A68;
+    --accent: #93A8FF;
+    --accent-soft: #1D2748;
+    --pass: #5CCB94;
+    --pass-soft: #14301F;
+    --fail: #FF8F8F;
+    --fail-soft: #3A1C22;
+    --pending: #3D4A68;
+    --shadow: rgba(0, 0, 0, .35);
+    color-scheme: dark;
+  }
+
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    background: var(--bg);
+    color: var(--ink);
+    font-family: 'Geist', system-ui, -apple-system, 'Segoe UI', sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+  }
+  p { margin: 0; }
+  h1, h2, h3 { margin: 0; text-wrap: balance; letter-spacing: -.02em; }
+  a { color: var(--accent); }
+  .mono { font-family: 'Geist Mono', ui-monospace, 'Cascadia Mono', monospace; }
+  :focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; border-radius: 3px; }
+  main:focus { outline: none; }
+
+  .skip {
+    position: absolute; left: 16px; top: -60px; z-index: 50;
+    background: var(--accent); color: var(--surface);
+    font-size: .88rem; font-weight: 500;
+    padding: 10px 14px; border-radius: 6px; text-decoration: none;
+    transition: top .15s ease;
+  }
+  .skip:focus { top: calc(12px + env(safe-area-inset-top, 0px)); }
+
+  /* shell */
+  .shell {
+    display: grid;
+    grid-template-columns: 300px minmax(0, 1fr);
+    gap: 80px;
+    max-width: 1160px;
+    margin: 0 auto;
+    padding-inline: 32px;
+  }
+
+  /* rail */
+  .rail {
+    position: sticky;
+    top: env(safe-area-inset-top, 0px);
+    height: 100dvh;
+    padding-block: 72px 36px;
+    display: flex;
+    flex-direction: column;
+    gap: 28px;
+    overflow-y: auto;
+  }
+  .rail-top { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+  .rail h1 { font-size: 2rem; font-weight: 600; line-height: 1.15; }
+  .rail h1 .ph { color: var(--ink-muted); font-weight: 500; }
+  .rail .role { font-size: 1.05rem; font-weight: 500; margin-top: 10px; }
+  .rail .pitch { color: var(--ink-muted); margin-top: 12px; font-size: .95rem; max-width: 34ch; }
+  .ctas { display: flex; gap: 10px; flex-wrap: wrap; }
+  .btn {
+    font-size: .88rem; font-weight: 500;
+    padding: 10px 16px; border-radius: 8px;
+    text-decoration: none;
+    display: inline-flex; align-items: center; gap: 8px;
+    transition: background .15s ease, border-color .15s ease, transform .15s ease;
+  }
+  .btn.primary { background: var(--ink); color: var(--bg); }
+  .btn.primary:hover { transform: translateY(-1px); }
+  .btn.ghost { border: 1px solid var(--line-strong); color: var(--ink); }
+  .btn.ghost:hover { border-color: var(--accent); color: var(--accent); }
+
+  .rail nav ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 2px; }
+  .rail nav a {
+    display: flex; align-items: center; gap: 14px;
+    padding: 7px 0;
+    color: var(--ink-muted);
+    text-decoration: none;
+    font-size: .9rem; font-weight: 500;
+    transition: color .15s ease;
+  }
+  .rail nav a::before {
+    content: ""; height: 1.5px; width: 22px; background: var(--line-strong);
+  }
+  .rail nav a:hover, .rail nav a.is-active { color: var(--ink); }
+  .rail nav a.is-active::before { width: 56px; background: var(--accent); transition: width .2s ease, background .2s ease; }
+  @media (prefers-reduced-motion: reduce) { .rail nav a.is-active::before { transition: none; } }
+
+  .contacts { margin-top: auto; display: grid; gap: 6px; font-size: .85rem; }
+  .contacts .mono { color: var(--ink-muted); }
+  .menu-btn {
+    display: none;
+    font: inherit; font-size: .88rem; font-weight: 500;
+    background: transparent; color: var(--ink);
+    border: 1px solid var(--line-strong); border-radius: 8px;
+    padding: 7px 12px; cursor: pointer;
+  }
+  .m-only { display: none; }
+
+  /* main */
+  main { padding-block: 72px 80px; min-width: 0; }
+  main section { padding-block: 56px; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
+  main section:first-of-type { border-top: none; padding-top: 0; }
+  main h2 { font-size: 1.35rem; font-weight: 600; margin-bottom: 8px; }
+  .lead { color: var(--ink-muted); max-width: 60ch; margin-bottom: 28px; }
+
+  .proto-note {
+    font-size: .82rem; color: var(--ink-muted);
+    border: 1px dashed var(--line-strong); border-radius: 8px;
+    padding: 10px 14px; margin-bottom: 28px;
+  }
+  .proto-note b { color: var(--ink); font-weight: 600; }
+
+  /* terminal */
+  .term {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    box-shadow: 0 1px 2px var(--shadow), 0 16px 40px -24px var(--shadow);
+    overflow: hidden;
+  }
+  .term-bar {
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+    padding: 11px 16px;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-2);
+    font-family: 'Geist Mono', ui-monospace, monospace; font-size: .78rem; color: var(--ink-muted);
+  }
+  .term-bar .dots { display: flex; gap: 6px; }
+  .term-bar .dots span { width: 10px; height: 10px; border-radius: 50%; background: var(--line-strong); display: block; }
+  .term-bar .repo { margin-left: auto; color: var(--accent); text-decoration: none; }
+  .term-bar .repo:hover { text-decoration: underline; }
+  .term-body {
+    padding: 18px 20px 20px;
+    font-family: 'Geist Mono', ui-monospace, monospace;
+    font-size: .84rem;
+    line-height: 1.9;
+  }
+  .term-body .ln { white-space: pre-wrap; word-break: break-word; }
+  .term-body .prompt { color: var(--accent); font-weight: 600; }
+  .term-body .ok { color: var(--pass); }
+  .term-body .muted { color: var(--ink-muted); }
+  .term-body .sum { color: var(--ink); font-weight: 600; margin-top: 6px; display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+  .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--pass); flex: none; }
+  .cursor { display: inline-block; width: .55em; height: 1.05em; background: var(--accent); vertical-align: -3px; }
+
+  .summary {
+    display: grid; grid-template-columns: repeat(4, 1fr);
+    border-top: 1px solid var(--line);
+  }
+  .summary > div { padding: 18px 20px; }
+  .summary > div + div { border-left: 1px solid var(--line); }
+  .stat .num { font-family: 'Geist Mono', monospace; font-variant-numeric: tabular-nums; font-size: 1.45rem; font-weight: 600; letter-spacing: -.02em; }
+  .stat .cap { font-size: .8rem; color: var(--ink-muted); line-height: 1.35; }
+
+  @keyframes lineIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+  @keyframes blink { 0%, 55% { opacity: 1; } 56%, 100% { opacity: 0; } }
+  .term-body .ln { animation: lineIn .35s ease both; }
+  .term-body .ln:nth-child(1) { animation-delay: .05s; }
+  .term-body .ln:nth-child(2) { animation-delay: .3s; }
+  .term-body .ln:nth-child(3) { animation-delay: .5s; }
+  .term-body .ln:nth-child(4) { animation-delay: .7s; }
+  .term-body .ln:nth-child(5) { animation-delay: .9s; }
+  .term-body .ln:nth-child(6) { animation-delay: 1.1s; }
+  .term-body .ln:nth-child(7) { animation-delay: 1.3s; }
+  .term-body .ln:nth-child(8) { animation-delay: 1.5s; }
+  .term-body .ln:nth-child(9) { animation-delay: 1.8s; }
+  .cursor { animation: blink 1.05s step-end infinite; }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+    .term-body .ln, .cursor { animation: none; }
+  }
+
+  /* skills */
+  .skills { margin: 0; border-top: 1px solid var(--line); }
+  .skill-row {
+    display: grid; grid-template-columns: 220px 1fr; gap: 24px;
+    padding: 16px 0; border-bottom: 1px solid var(--line);
+    align-items: baseline;
+  }
+  .skill-row dt { font-weight: 600; font-size: .95rem; }
+  .skill-row dt span { display: block; font-weight: 400; font-size: .82rem; color: var(--ink-muted); margin-top: 2px; }
+  .skill-row dd { margin: 0; display: flex; flex-wrap: wrap; gap: 6px; }
+  .tag {
+    font-family: 'Geist Mono', monospace; font-size: .78rem;
+    padding: 3px 9px; border-radius: 6px;
+    background: var(--surface); border: 1px solid var(--line); color: var(--ink);
+    transition: border-color .15s ease, color .15s ease;
+  }
+  .skill-row:hover .tag { border-color: var(--accent); color: var(--accent); }
+
+  /* cases */
+  .case {
+    background: var(--surface);
+    border: 1px solid var(--line);
+    border-radius: 12px;
+    padding: 26px 26px 24px;
+    transition: border-color .2s ease, box-shadow .2s ease;
+  }
+  .case + .case { margin-top: 20px; }
+  .case:hover { border-color: var(--line-strong); box-shadow: 0 16px 40px -28px var(--shadow); }
+  .case-head { display: flex; justify-content: space-between; align-items: baseline; gap: 12px; flex-wrap: wrap; margin-bottom: 18px; }
+  .case h3 { font-size: 1.15rem; font-weight: 600; }
+  .case-meta { display: flex; gap: 6px; flex-wrap: wrap; }
+  .star { display: grid; gap: 12px; margin-bottom: 22px; }
+  .star-row { display: grid; grid-template-columns: 96px 1fr; gap: 16px; }
+  .star-row b { font-size: .82rem; font-weight: 600; color: var(--ink-muted); }
+  .star-row p { font-size: .93rem; }
+  .impact { display: grid; gap: 16px; padding-top: 18px; border-top: 1px solid var(--line); }
+  .impact-title { font-size: .82rem; font-weight: 600; color: var(--ink-muted); margin-bottom: 6px; }
+  .bar-row { display: grid; grid-template-columns: 56px 1fr 72px; gap: 12px; align-items: center; font-size: .82rem; }
+  .bar-row .bl { color: var(--ink-muted); }
+  .bar-row .bv { font-family: 'Geist Mono', monospace; font-variant-numeric: tabular-nums; font-weight: 600; text-align: right; }
+  .track { height: 8px; border-radius: 4px; background: var(--surface-2); overflow: hidden; }
+  .fill { display: block; height: 100%; border-radius: 4px; }
+  .fill.before { background: var(--line-strong); }
+  .fill.after { background: var(--pass); }
+  .bar-row .bv.before { color: var(--ink-muted); }
+  .bar-row .bv.after { color: var(--pass); }
+
+  /* projects & experience */
+  .rows { border-top: 1px solid var(--line); }
+  .row-item { display: grid; grid-template-columns: 220px 1fr; gap: 24px; padding: 18px 0; border-bottom: 1px solid var(--line); }
+  .row-item .k { font-family: 'Geist Mono', monospace; font-size: .8rem; color: var(--ink-muted); padding-top: 3px; }
+  .row-item h3 { font-size: 1rem; font-weight: 600; margin-bottom: 4px; }
+  .row-item .place { font-size: .88rem; color: var(--ink-muted); margin-bottom: 6px; }
+  .row-item p, .row-item li { font-size: .92rem; color: var(--ink-muted); }
+  .row-item ul { margin: 0; padding-left: 1.1em; display: grid; gap: 3px; }
+
+  .skills > .skill-row:last-child, .rows > .row-item:last-child { border-bottom: none; padding-bottom: 0; }
+
+  /* contact */
+  .contact h2 { font-size: clamp(1.6rem, 3.5vw, 2.2rem); margin-bottom: 10px; }
+  .contact .lead { margin-bottom: 22px; }
+  .contact-list { display: flex; flex-wrap: wrap; gap: 10px 26px; font-family: 'Geist Mono', monospace; font-size: .88rem; }
+  .contact-list a { text-decoration: none; border-bottom: 1px solid var(--line-strong); }
+  .contact-list a:hover { border-color: var(--accent); }
+  .contact-list span { color: var(--ink-muted); }
+
+  footer.page { font-size: .8rem; color: var(--ink-muted); padding-top: 28px; border-top: 1px solid var(--line); }
+
+  /* responsive */
+  @media (max-width: 960px) {
+    .shell { display: block; padding-inline: 20px; }
+    .rail {
+      height: auto; overflow: visible;
+      padding-block: calc(12px + env(safe-area-inset-top, 0px)) 12px;
+      margin-inline: -20px; padding-inline: 20px;
+      gap: 0;
+      background: color-mix(in srgb, var(--bg) 88%, transparent);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid var(--line);
+      z-index: 20;
+    }
+    .rail h1 { font-size: 1.05rem; }
+    .rail .role, .rail .pitch, .rail .ctas, .contacts, .rail .d-only { display: none; }
+    .menu-btn { display: inline-flex; }
+    .rail nav { display: none; padding-top: 8px; }
+    .rail.open nav { display: block; }
+    .rail nav a { padding: 11px 0; border-top: 1px solid var(--line); font-size: .95rem; }
+    .rail nav a::before { display: none; }
+    .rail nav a.is-active { color: var(--accent); }
+    .m-only { display: block; }
+    main { padding-top: 36px; }
+    main section { scroll-margin-top: 80px; }
+    .m-intro { margin-bottom: 32px; }
+    .m-intro .role { font-size: 1.15rem; font-weight: 600; }
+    .m-intro .pitch { color: var(--ink-muted); margin: 10px 0 18px; }
+  }
+  @media (max-width: 640px) {
+    .term-body { font-size: .78rem; padding: 16px; }
+    .term-body .leader { display: none; }
+    .summary { grid-template-columns: 1fr 1fr; }
+    .summary > div + div { border-left: none; }
+    .summary > div { border-top: 1px solid var(--line); }
+    .summary > div:nth-child(-n+2) { border-top: none; }
+    .summary > div:nth-child(even) { border-left: 1px solid var(--line); }
+    .skill-row, .row-item { grid-template-columns: 1fr; gap: 8px; }
+    .star-row { grid-template-columns: 1fr; gap: 2px; }
+    .case { padding: 20px 18px; }
+  }
+
+  /* idioma */
+  .tools { display: flex; align-items: center; gap: 8px; }
+  .lang { display: inline-flex; border: 1px solid var(--line-strong); border-radius: 8px; padding: 2px; }
+  .lang button {
+    font-family: 'Geist Mono', ui-monospace, monospace; font-size: .75rem; font-weight: 600;
+    background: transparent; color: var(--ink-muted);
+    border: 0; border-radius: 6px; padding: 5px 9px; cursor: pointer;
+    transition: background .15s ease, color .15s ease;
+  }
+  .lang button:hover { color: var(--ink); }
+  .lang button[aria-pressed="true"] { background: var(--ink); color: var(--bg); }
+  @media (min-width: 961px) {
+    .rail-top { flex-direction: column-reverse; align-items: flex-start; gap: 22px; }
+  }
+  .skill-row dt .t { display: inline; font-weight: 600; font-size: .95rem; color: var(--ink); margin: 0; }
+
+  .rail .loc { font-size: .85rem; color: var(--ink-muted); margin-top: 10px; }
+  .case-org { font-size: .85rem; color: var(--ink-muted); margin-top: 4px; }
+  .num .unit { font-size: .95rem; font-weight: 500; color: var(--ink-muted); }
+  .shift { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; font-size: .85rem; }
+  .shift .from, .shift .to { padding: 6px 11px; border-radius: 6px; font-weight: 500; }
+  .shift .from { background: var(--surface-2); color: var(--ink); }
+  .shift .to { background: var(--pass-soft); color: var(--pass); }
+  .shift .arrow { color: var(--ink-muted); }
+  .facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1px; background: var(--line); border: 1px solid var(--line); border-radius: 8px; overflow: hidden; }
+  .facts > div { background: var(--surface); padding: 12px 14px; display: grid; gap: 2px; }
+  .facts .fv { font-family: 'Geist Mono', monospace; font-variant-numeric: tabular-nums; font-size: 1.15rem; font-weight: 600; color: var(--accent); }
+  .facts .fl { font-size: .8rem; color: var(--ink-muted); line-height: 1.35; }
+  @media (max-width: 640px) { .facts { grid-template-columns: 1fr; } }
+  a.proj { color: var(--ink); text-decoration: none; background-image: linear-gradient(var(--accent), var(--accent)); background-size: 0 1.5px; background-position: 0 100%; background-repeat: no-repeat; transition: background-size .2s ease, color .15s ease; }
+  a.proj:hover { color: var(--accent); background-size: 100% 1.5px; }
+  .row-item .k { overflow-wrap: anywhere; }
+  @media (max-width: 960px) { .rail .loc { display: none; } }
+</style>
+</head>
+<body>
+<a class="skip" href="#conteudo" data-i18n="skip">Pular para o conteúdo</a>
+
+<div class="shell">
+  <header class="rail" id="rail">
+    <div>
+      <div class="rail-top">
+        <h1>Wylker Reis</h1>
+        <div class="tools">
+          <div class="lang" role="group" aria-label="Idioma" data-i18n-aria="langGroup">
+            <button type="button" data-lang="pt" aria-pressed="true">PT</button>
+            <button type="button" data-lang="en" aria-pressed="false">EN</button>
+          </div>
+          <button class="menu-btn" type="button" id="menu-btn" aria-expanded="false" aria-controls="menu-nav">Menu</button>
+        </div>
+      </div>
+      <p class="role" data-i18n="role">Analista de QA Sênior (SDET)</p>
+      <p class="pitch" data-i18n="pitch">Quase 7 anos automatizando testes de front-end, back-end e APIs em bancos e empresas de tecnologia. Troco regressões manuais por execução contínua no CI/CD.</p>
+      <p class="loc" data-i18n="loc">Fortaleza, Ceará · Brasil</p>
+    </div>
+    <div class="ctas">
+      <a class="btn primary" href="#cases" data-i18n="ctaCases">Ver estudos de caso</a>
+      <a class="btn ghost" href="cv/CV-Wylker-Reis-PT.pdf" data-href-en="cv/CV-Wylker-Reis-EN.pdf" download data-i18n="ctaCv">Baixar currículo</a>
+    </div>
+    <nav id="menu-nav" aria-label="Seções" data-i18n-aria="navLabel">
+      <ul>
+        <li><a href="#relatorio" data-i18n="navSummary">Resumo</a></li>
+        <li><a href="#skills" data-i18n="navSkills">Skills</a></li>
+        <li><a href="#cases" data-i18n="navCases">Estudos de caso</a></li>
+        <li><a href="#projetos" data-i18n="navProjects">Projetos</a></li>
+        <li><a href="#experiencia" data-i18n="navExp">Experiência</a></li>
+        <li><a href="#formacao" data-i18n="navEdu">Formação</a></li>
+        <li><a href="#contato" data-i18n="navContact">Contato</a></li>
+      </ul>
+    </nav>
+    <div class="contacts">
+      <a href="https://www.linkedin.com/in/wylker-reis/" target="_blank" rel="noopener">linkedin.com/in/wylker-reis</a>
+      <a href="https://github.com/WylkerReis" target="_blank" rel="noopener">github.com/WylkerReis</a>
+      <a href="mailto:wylker@outlook.com">wylker@outlook.com</a>
+    </div>
+  </header>
+
+  <main id="conteudo" tabindex="-1">
+    <div class="m-only m-intro">
+      <p class="role" data-i18n="role">Analista de QA Sênior (SDET)</p>
+      <p class="pitch" data-i18n="pitch">Quase 7 anos automatizando testes de front-end, back-end e APIs em bancos e empresas de tecnologia. Troco regressões manuais por execução contínua no CI/CD.</p>
+      <div class="ctas" style="display:flex">
+        <a class="btn primary" href="#cases" data-i18n="ctaCases">Ver estudos de caso</a>
+        <a class="btn ghost" href="cv/CV-Wylker-Reis-PT.pdf" data-href-en="cv/CV-Wylker-Reis-EN.pdf" download data-i18n="ctaCv">Baixar currículo</a>
+      </div>
+    </div>
+
+    <section id="relatorio" aria-label="Resumo de impacto" data-i18n-aria="summaryLabel">
+      <div class="term">
+        <div class="term-bar">
+          <span class="dots" aria-hidden="true"><span></span><span></span><span></span></span>
+          <span>SauceDemo-Playwright-BDD</span>
+          <a class="repo" href="https://github.com/WylkerReis/SauceDemo-Playwright-BDD" target="_blank" rel="noopener" data-i18n="repoLink">ver repositório ↗</a>
+        </div>
+        <div class="term-body">
+          <div class="ln"><span class="prompt">$</span> npx bddgen &amp;&amp; npx playwright test</div>
+          <div class="ln"><span class="ok">✓</span> login.feature <span class="muted"><span class="leader">.............. </span>5 scenarios</span></div>
+          <div class="ln"><span class="ok">✓</span> session.feature <span class="muted"><span class="leader">............ </span>2 scenarios</span></div>
+          <div class="ln"><span class="ok">✓</span> cart.feature <span class="muted"><span class="leader">............... </span>5 scenarios</span></div>
+          <div class="ln"><span class="ok">✓</span> sorting.feature <span class="muted"><span class="leader">............ </span>4 scenarios</span></div>
+          <div class="ln"><span class="ok">✓</span> checkout.feature <span class="muted"><span class="leader">........... </span>7 scenarios</span></div>
+          <div class="ln"><span class="ok">✓</span> known-issues.feature <span class="muted"><span class="leader">....... </span>5 scenarios · test.fail()</span></div>
+          <div class="ln muted"># 5 seeded bugs re-verified on every run, CI stays green</div>
+          <div class="ln sum"><span class="status-dot" aria-hidden="true"></span>28 passed · 5 known bugs tracked<span class="cursor" aria-hidden="true"></span></div>
+        </div>
+        <div class="summary">
+          <div class="stat"><div class="num">~7 <span class="unit" data-i18n="uYears">anos</span></div><div class="cap" data-i18n="capYears">em QA, bancos e tecnologia</div></div>
+          <div class="stat"><div class="num" data-i18n="nCases">2.000+</div><div class="cap" data-i18n="capCases">casos de teste automatizados</div></div>
+          <div class="stat"><div class="num">~200 <span class="unit" data-i18n="uHrs">h/ano</span></div><div class="cap" data-i18n="capHours">de regressão manual devolvidas ao time (Paraná Banco)</div></div>
+          <div class="stat"><div class="num">15 → 3 <span class="unit">min</span></div><div class="cap" data-i18n="capPre">teste pré-deploy (QAT Global)</div></div>
+        </div>
+      </div>
+    </section>
+
+    <section id="skills">
+      <h2 data-i18n="skillsTitle">Skills</h2>
+      <p class="lead" data-i18n="skillsLead">Ferramentas que uso em projetos reais, do teste de UI à investigação de falhas em produção.</p>
+      <dl class="skills">
+        <div class="skill-row"><dt><span class="t" data-i18n="sk1">Automação de UI</span><span data-i18n="sk1d">Web, front-end e fluxos ponta a ponta</span></dt><dd><span class="tag">Playwright</span><span class="tag">Cypress</span><span class="tag">Selenium</span><span class="tag">Robot Framework</span><span class="tag">Parasoft</span></dd></div>
+        <div class="skill-row"><dt><span class="t" data-i18n="sk2">APIs</span><span data-i18n="sk2d">Testes HTTP, REST e SOAP</span></dt><dd><span class="tag">Postman</span><span class="tag">Swagger</span><span class="tag">SoapUI</span></dd></div>
+        <div class="skill-row"><dt><span class="t" data-i18n="sk3">Performance</span><span data-i18n="sk3d">Carga, estresse e desempenho</span></dt><dd><span class="tag">K6</span><span class="tag">JMeter</span></dd></div>
+        <div class="skill-row"><dt><span class="t" data-i18n="sk4">Linguagens</span><span data-i18n="sk4d">Frameworks e scripts de teste</span></dt><dd><span class="tag">Python</span><span class="tag">TypeScript</span><span class="tag">JavaScript</span><span class="tag">C#</span><span class="tag">Java</span></dd></div>
+        <div class="skill-row"><dt><span class="t" data-i18n="sk5">Dados &amp; observabilidade</span><span data-i18n="sk5d">Validação de dados e investigação de falhas</span></dt><dd><span class="tag">SQL Server</span><span class="tag">Oracle</span><span class="tag">MongoDB</span><span class="tag">Kibana/ELK</span><span class="tag">Datadog</span></dd></div>
+        <div class="skill-row"><dt><span class="t" data-i18n="sk6">Processo &amp; CI/CD</span><span data-i18n="sk6d">Práticas de time e pipeline</span></dt><dd><span class="tag">Azure DevOps</span><span class="tag">Jenkins</span><span class="tag">GitHub Actions</span><span class="tag">BDD/Gherkin</span><span class="tag">Page Object</span><span class="tag">Scrum/Kanban</span></dd></div>
+      </dl>
+    </section>
+
+    <section id="cases">
+      <h2 data-i18n="casesTitle">Estudos de caso</h2>
+      <p class="lead" data-i18n="casesLead">Situações reais em que a automação fez diferença para o time e para o cliente.</p>
+
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <h3 data-i18n="c1Title">Regressão pré-deploy de 15 para ~3 minutos</h3>
+            <div class="case-org">QAT Global · <span data-i18n="c1When">2025 – atual</span></div>
+          </div>
+          <div class="case-meta"><span class="tag">Parasoft</span><span class="tag">Postman</span><span class="tag">Azure DevOps</span></div>
+        </div>
+        <div class="star">
+          <div class="star-row"><b data-i18n="sit">Situação</b><p data-i18n="c1S">A suíte de regressão tinha cerca de 600 casos. Ela rodava inteira antes de cada deploy e atrasava a liberação.</p></div>
+          <div class="star-row"><b data-i18n="act">Ação</b><p data-i18n="c1A">Reestruturei a suíte em smoke e sanity por domínio. A regressão completa continua disponível sob demanda.</p></div>
+          <div class="star-row"><b data-i18n="res">Resultado</b><p data-i18n="c1R">O teste pré-deploy caiu de 15 para cerca de 3 minutos, sem perder a cobertura completa.</p></div>
+        </div>
+        <div class="impact">
+          <div>
+            <div class="impact-title" data-i18n="c1M1">Tempo de teste pré-deploy</div>
+            <div class="bar-row"><span class="bl" data-i18n="before">Antes</span><span class="track"><span class="fill before" style="width:100%"></span></span><span class="bv before">15 min</span></div>
+            <div class="bar-row"><span class="bl" data-i18n="after">Depois</span><span class="track"><span class="fill after" style="width:20%"></span></span><span class="bv after">~3 min</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <h3 data-i18n="c2Title">Fim da regressão manual de fim de semana</h3>
+            <div class="case-org">Paraná Banco · 2024 – 2025</div>
+          </div>
+          <div class="case-meta"><span class="tag">Python</span><span class="tag">Robot Framework</span><span class="tag">CI/CD</span></div>
+        </div>
+        <div class="star">
+          <div class="star-row"><b data-i18n="sit">Situação</b><p data-i18n="c2S">A regressão bancária era manual, a cada 2 semanas, no fim de semana. Eram 2 QAs por cerca de 4 horas.</p></div>
+          <div class="star-row"><b data-i18n="act">Ação</b><p data-i18n="c2A">Liderei a prova de conceito e a implantação da automação com Python e Robot Framework no pipeline de CI/CD. Também apresentei internamente o valor dos testes automatizados.</p></div>
+          <div class="star-row"><b data-i18n="res">Resultado</b><p data-i18n="c2R">A execução passou a ser automática e o QA só revisa o resultado. A adoção cresceu de 1 para 4 squads.</p></div>
+        </div>
+        <div class="impact">
+          <div>
+            <div class="impact-title" data-i18n="c2M1">Esforço por ciclo de regressão</div>
+            <div class="shift"><span class="from" data-i18n="c2From">2 QAs × ~4 h no fim de semana</span><span class="arrow" aria-hidden="true">→</span><span class="to" data-i18n="c2To">execução no CI/CD + revisão</span></div>
+          </div>
+          <div>
+            <div class="impact-title" data-i18n="c2M2">Squads usando a automação</div>
+            <div class="bar-row"><span class="bl" data-i18n="before">Antes</span><span class="track"><span class="fill before" style="width:25%"></span></span><span class="bv before">1</span></div>
+            <div class="bar-row"><span class="bl" data-i18n="after">Depois</span><span class="track"><span class="fill after" style="width:100%"></span></span><span class="bv after">4</span></div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <h3 data-i18n="cbTitle">Teste de performance que expôs perda de pacotes no BTG Pactual</h3>
+            <div class="case-org">ACT Digital · BTG Pactual · <span data-i18n="cbWhen">1,5 ano</span></div>
+          </div>
+          <div class="case-meta"><span class="tag">K6</span><span class="tag">C#</span><span class="tag">Selenium/.NET</span><span class="tag">Jenkins</span></div>
+        </div>
+        <div class="star">
+          <div class="star-row"><b data-i18n="sit">Situação</b><p data-i18n="cbS">Pela ACT Digital, atendi o BTG Pactual por 1,5 ano. Mantive uma suíte de cerca de 1.000 casos em front-end, back-end e APIs, e validei o sistema sob carga.</p></div>
+          <div class="star-row"><b data-i18n="act">Ação</b><p data-i18n="cbA">Nos testes de carga e estresse com K6, encontrei um bug que só aparecia com volume: o sistema perdia pacotes. Documentei o problema e trabalhei com o time na solução, que foi criar filas para processar as requisições.</p></div>
+          <div class="star-row"><b data-i18n="res">Resultado</b><p data-i18n="cbR">Com as filas, a perda de pacotes diminuiu. O teste de performance pegou um problema que só aparece com volume real.</p></div>
+        </div>
+        <div class="impact">
+          <div>
+            <div class="impact-title" data-i18n="cbM1">Comportamento sob carga</div>
+            <div class="shift"><span class="from" data-i18n="cbFrom">Sem filas: perda de pacotes sob carga</span><span class="arrow" aria-hidden="true">→</span><span class="to" data-i18n="cbTo">Com filas: perda de pacotes reduzida</span></div>
+          </div>
+          <div>
+            <div class="impact-title" data-i18n="cbM2">Escala da suíte</div>
+            <div class="facts">
+              <div><span class="fv">~1.000</span><span class="fl" data-i18n="cbF1">casos de teste</span></div>
+              <div><span class="fv">3</span><span class="fl" data-i18n="cbF2">camadas: front-end, back-end e API</span></div>
+              <div><span class="fv" data-i18n="cbF3v">1,5 ano</span><span class="fl" data-i18n="cbF3">de manutenção contínua</span></div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <article class="case">
+        <div class="case-head">
+          <div>
+            <h3 data-i18n="c3Title">50 cenários críticos automatizados, sem plantão de sábado</h3>
+            <div class="case-org">Pague Menos · 2019 – 2020</div>
+          </div>
+          <div class="case-meta"><span class="tag">Cypress</span><span class="tag">JavaScript</span></div>
+        </div>
+        <div class="star">
+          <div class="star-row"><b data-i18n="sit">Situação</b><p data-i18n="c3S">Toda sexta, 3 QAs passavam 8 horas no teste manual da regressão semanal. Mesmo assim, era preciso plantão no sábado para terminar.</p></div>
+          <div class="star-row"><b data-i18n="act">Ação</b><p data-i18n="c3A">Automatizei com Cypress e JavaScript os 50 cenários mais críticos da regressão.</p></div>
+          <div class="star-row"><b data-i18n="res">Resultado</b><p data-i18n="c3R">Os plantões de sábado deixaram de ser necessários.</p></div>
+        </div>
+        <div class="impact">
+          <div>
+            <div class="impact-title" data-i18n="c3M1">Rotina da regressão semanal</div>
+            <div class="shift"><span class="from" data-i18n="c3From">3 QAs × 8 h na sexta + plantão no sábado</span><span class="arrow" aria-hidden="true">→</span><span class="to" data-i18n="c3To">50 cenários críticos automatizados, sem sábado</span></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <section id="projetos">
+      <h2 data-i18n="projTitle">Projetos no GitHub</h2>
+      <p class="lead" data-i18n="projLead">Projetos pessoais que mantenho para me atualizar. Cada um tem plano de teste, relatório de execução e relatório de bugs.</p>
+      <div class="rows">
+        <div class="row-item">
+          <div class="k">Playwright · TypeScript</div>
+          <div>
+            <h3><a class="proj" href="https://github.com/WylkerReis/SauceDemo-Playwright-BDD" target="_blank" rel="noopener">SauceDemo-Playwright-BDD ↗</a></h3>
+            <p data-i18n="p1D">Suíte E2E com Cucumber/BDD e Page Object Model, com 28 cenários de login, carrinho, ordenação e checkout. Os 5 bugs reais do site ficam marcados com test.fail() e são revalidados a cada execução sem quebrar o CI.</p>
+          </div>
+        </div>
+        <div class="row-item">
+          <div class="k">Cypress · Cucumber</div>
+          <div>
+            <h3><a class="proj" href="https://github.com/WylkerReis/Desafio-Automacao-Inventario-CTI" target="_blank" rel="noopener">Desafio-Automacao-Inventario-CTI ↗</a></h3>
+            <p data-i18n="p2D">Automação de um sistema de inventário de ativos. Cobre 5 histórias de usuário e documenta 8 bugs confirmados com severidade. Cada execução gera print e vídeo como evidência.</p>
+          </div>
+        </div>
+        <div class="row-item">
+          <div class="k">Robot Framework</div>
+          <div>
+            <h3><a class="proj" href="https://github.com/WylkerReis/Parana_Tech" target="_blank" rel="noopener">Parana_Tech ↗</a></h3>
+            <p data-i18n="p3D">Framework em Robot Framework e Selenium para testes de API e de interface web, com guia de instalação passo a passo.</p>
+          </div>
+        </div>
+        <div class="row-item">
+          <div class="k">Cypress · JavaScript</div>
+          <div>
+            <h3><a class="proj" href="https://github.com/WylkerReis/Automacao_Pmenos" target="_blank" rel="noopener">Automacao_Pmenos ↗</a></h3>
+            <p data-i18n="p4D">Testes end-to-end para o painel de vendas da Pague Menos.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="experiencia">
+      <h2 data-i18n="expTitle">Experiência</h2>
+      <div class="rows" style="margin-top:20px">
+        <div class="row-item">
+          <div class="k" data-i18n="e1When">out 2025 – atual</div>
+          <div>
+            <h3 data-i18n="rSenior">Analista de QA Sênior</h3>
+            <div class="place">QAT Global</div>
+            <ul>
+              <li data-i18n="e1a">Reestruturei a regressão de cerca de 600 casos em smoke e sanity por domínio. O pré-deploy caiu de 15 para cerca de 3 minutos.</li>
+              <li data-i18n="e1b">Lidero testes funcionais, não funcionais, de regressão, aceitação e segurança com Parasoft.</li>
+              <li data-i18n="e1c">Testo APIs com Postman e Swagger e acompanho os defeitos no Azure DevOps.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row-item">
+          <div class="k" data-i18n="e2When">mai 2024 – out 2025</div>
+          <div>
+            <h3 data-i18n="rSenior">Analista de QA Sênior</h3>
+            <div class="place">Paraná Banco S/A</div>
+            <ul>
+              <li data-i18n="e2a">Liderei a automação com Python e Robot Framework que substituiu a regressão manual de fim de semana.</li>
+              <li data-i18n="e2b">Levei a automação de 1 para 4 squads e fiz testes de carga e estresse com K6.</li>
+              <li data-i18n="e2c">Investiguei falhas com Kibana/ELK, Datadog e consultas no SQL Server. Também liderei code reviews.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row-item">
+          <div class="k" data-i18n="e3When">jul 2021 – mai 2024</div>
+          <div>
+            <h3 data-i18n="rSenior">Analista de QA Sênior</h3>
+            <div class="place">ACT Digital · BTG Pactual, Banco ABC</div>
+            <ul>
+              <li data-i18n="e3a">Automatizei testes para o BTG Pactual (~1.000 casos, C# e Selenium) e o Banco ABC (~600 casos, Python e Robot Framework).</li>
+              <li data-i18n="e3b">Separei a suíte do Banco ABC por fluxo e economizei em média 10 minutos por execução.</li>
+              <li data-i18n="e3c">Mentorei cerca de 12 QAs e introduzi BDD, Gherkin e Page Object. Acompanhei a taxa de detecção de defeitos e de testes flaky.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row-item">
+          <div class="k" data-i18n="e4When">jan 2021 – jul 2021</div>
+          <div>
+            <h3 data-i18n="rQa">Analista de QA</h3>
+            <div class="place">AjaxTI · Siemens, Vale</div>
+            <ul>
+              <li data-i18n="e4a">Siemens (~200 casos): UI e API com Java e Selenium, performance com K6.</li>
+              <li data-i18n="e4b">Vale (~300 a 400 casos): UI com Cypress e JavaScript para uma plataforma de beneficiamento de minério, carga com JMeter.</li>
+            </ul>
+          </div>
+        </div>
+        <div class="row-item">
+          <div class="k" data-i18n="e5When">out 2019 – dez 2020</div>
+          <div>
+            <h3 data-i18n="rJunior">Analista de QA (início como Júnior/Trainee)</h3>
+            <div class="place">Pague Menos</div>
+            <ul>
+              <li data-i18n="e5a">Automatizei com Cypress os 50 cenários mais críticos da regressão semanal e acabei com os plantões de sábado.</li>
+              <li data-i18n="e5b">Participei da implantação do Azure DevOps na squad Integrador PBM.</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="formacao">
+      <h2 data-i18n="eduTitle">Formação</h2>
+      <div class="rows" style="margin-top:20px">
+        <div class="row-item"><div class="k" data-i18n="edu1When">previsão 2027</div><div><h3 data-i18n="edu1">Bacharelado em Ciência da Computação</h3><div class="place" data-i18n="edu1P">Estácio, Ceará · em andamento</div></div></div>
+        <div class="row-item"><div class="k" data-i18n="cert1When">jun 2020</div><div><h3>Scrum Foundation Certificate (SFC)</h3><div class="place">CertiProf</div></div></div>
+        <div class="row-item"><div class="k" data-i18n="langK">Idiomas</div><div><h3 data-i18n="langs">Português nativo · Inglês fluente · Espanhol intermediário</h3></div></div>
+      </div>
+    </section>
+
+    <section id="contato" class="contact">
+      <h2 data-i18n="contactTitle">Vamos conversar?</h2>
+      <p class="lead" data-i18n="contactLead">Estou aberto a oportunidades CLT e PJ como QA Sênior ou SDET, com foco em automação de testes, APIs e performance. Fico no aguardo do seu contato.</p>
+      <div class="contact-list">
+        <a href="https://www.linkedin.com/in/wylker-reis/" target="_blank" rel="noopener">linkedin.com/in/wylker-reis</a>
+        <a href="https://github.com/WylkerReis" target="_blank" rel="noopener">github.com/WylkerReis</a>
+        <a href="mailto:wylker@outlook.com">wylker@outlook.com</a>
+        <a href="cv/CV-Wylker-Reis-PT.pdf" data-href-en="cv/CV-Wylker-Reis-EN.pdf" download data-i18n="cvLink">Currículo em PDF</a>
+      </div>
+    </section>
+
+    <footer class="page">Francisco Wylker Reis Coelho · Fortaleza, CE</footer>
+  </main>
+</div>
+
+<script>
+/* ============================================================
+   TEXTOS EM INGLÊS: edite aqui.
+   Os textos em português ficam direto no HTML acima, marcados
+   com data-i18n="chave". Para traduzir um texto, use a mesma
+   chave abaixo. Chave que faltar aqui continua em português.
+   ============================================================ */
+var EN = {
+  skip: "Skip to content",
+  langGroup: "Language",
+  role: "Senior QA Analyst (SDET)",
+  pitch: "Nearly seven years automating front-end, back-end and API tests in banking and technology. I replace manual regression with continuous CI/CD runs.",
+  loc: "Fortaleza, Ceará · Brazil",
+  ctaCases: "See case studies", ctaCv: "Download CV", cvLink: "CV (PDF)",
+  navLabel: "Sections",
+  navSummary: "Summary", navSkills: "Skills", navCases: "Case studies",
+  navProjects: "Projects", navExp: "Experience", navEdu: "Education", navContact: "Contact",
+  summaryLabel: "Impact summary",
+  repoLink: "view repo ↗",
+  capPre: "pre-deploy test time (QAT Global)",
+    uYears: "yrs", capYears: "in QA, banking and tech",
+  nCases: "2,000+", capCases: "automated test cases",
+  uHrs: "h/yr", capHours: "of manual regression handed back to the team (Paraná Banco)",
+  skillsTitle: "Skills",
+  skillsLead: "Tools I use on real projects, from UI testing to investigating production failures.",
+  sk1: "UI automation", sk1d: "Web, front-end and end-to-end flows",
+  sk2: "APIs", sk2d: "HTTP, REST and SOAP testing",
+  sk3: "Performance", sk3d: "Load, stress and performance",
+  sk4: "Languages", sk4d: "Test frameworks and scripts",
+  sk5: "Data &amp; observability", sk5d: "Data validation and failure investigation",
+  sk6: "Process &amp; CI/CD", sk6d: "Team practices and pipelines",
+  casesTitle: "Case studies",
+  casesLead: "Real situations where automation made a difference for the team and the client.",
+  cbTitle: "Performance testing that exposed packet loss at BTG Pactual", cbWhen: "1.5 years",
+  cbS: "Through ACT Digital, I worked with BTG Pactual for 1.5 years. I maintained a suite of about 1,000 cases across front-end, back-end and APIs, and validated the system under load.",
+  cbA: "During load and stress testing with K6, I found a bug that only showed up at volume: the system was losing packets. I documented the issue and worked with the team on the fix, which was adding queues to process the requests.",
+  cbR: "With the queues in place, packet loss went down. Performance testing caught a problem that only appears at real volume.",
+  cbM1: "Behavior under load", cbFrom: "No queues: packet loss under load", cbTo: "With queues: reduced packet loss",
+  cbM2: "Suite scale", cbF1: "test cases", cbF2: "layers: front-end, back-end and API", cbF3v: "1.5 yrs", cbF3: "of continuous maintenance",
+  sit: "Situation", act: "Action", res: "Result", before: "Before", after: "After",
+  c1Title: "Pre-deploy regression from 15 to ~3 minutes",
+  c1When: "2025 – present",
+  c1S: "The regression suite had about 600 cases. It ran in full before every deploy and delayed releases.",
+  c1A: "I restructured the suite into smoke and sanity categories by domain. Full regression is still available on demand.",
+  c1R: "Pre-deploy testing dropped from 15 to about 3 minutes, with full coverage still available.",
+  c1M1: "Pre-deploy test time",
+  c2Title: "Ending the manual weekend regression",
+  c2S: "Banking regression was manual, every two weeks, on the weekend. It took 2 QAs about 4 hours.",
+  c2A: "I led the proof of concept and rollout of Python and Robot Framework automation in the CI/CD pipeline. I also presented the value of automated testing internally.",
+  c2R: "Runs became automatic and the QA only reviews the results. Adoption grew from 1 to 4 squads.",
+  c2M1: "Effort per regression cycle",
+  c2From: "2 QAs × ~4 h on the weekend", c2To: "CI/CD run + review",
+  c2M2: "Squads using the automation",
+  c3Title: "50 critical scenarios automated, no more Saturday shifts",
+  c3S: "Every Friday, 3 QAs spent 8 hours on manual weekly regression. Even so, Saturday shifts were needed to finish.",
+  c3A: "I automated the 50 most critical regression scenarios with Cypress and JavaScript.",
+  c3R: "Saturday shifts were no longer needed.",
+  c3M1: "Weekly regression routine",
+  c3From: "3 QAs × 8 h on Friday + Saturday shift", c3To: "50 critical scenarios automated, no Saturday",
+  projTitle: "GitHub projects",
+  projLead: "Personal projects I keep to stay current. Each one has a test plan, an execution report and a bug report.",
+  p1D: "E2E suite with Cucumber/BDD and Page Object Model, with 28 scenarios for login, cart, sorting and checkout. The site's 5 real bugs are tagged with test.fail() and re-verified on every run without breaking CI.",
+  p2D: "Automation for an asset-inventory system. It covers 5 user stories and documents 8 confirmed bugs with severity. Every run captures a screenshot and a video as evidence.",
+  p3D: "Robot Framework and Selenium framework for API and web UI tests, with a step-by-step setup guide.",
+  p4D: "End-to-end tests for Pague Menos' sales panel.",
+  expTitle: "Experience",
+  rSenior: "Senior QA Analyst", rQa: "QA Analyst", rJunior: "QA Analyst (started as Junior/Trainee)",
+  e1When: "Oct 2025 – present",
+  e1a: "Restructured the ~600-case regression into smoke and sanity by domain. Pre-deploy dropped from 15 to about 3 minutes.",
+  e1b: "Leads functional, non-functional, regression, acceptance and security testing with Parasoft.",
+  e1c: "Tests APIs with Postman and Swagger and tracks defects in Azure DevOps.",
+  e2When: "May 2024 – Oct 2025",
+  e2a: "Led the Python + Robot Framework automation that replaced the manual weekend regression.",
+  e2b: "Grew automation from 1 to 4 squads and ran load and stress tests with K6.",
+  e2c: "Investigated failures with Kibana/ELK, Datadog and SQL Server queries. Also led code reviews.",
+  e3When: "Jul 2021 – May 2024",
+  e3a: "Automation for BTG Pactual (~1,000 cases, C# and Selenium) and Banco ABC (~600 cases, Python and Robot Framework).",
+  e3b: "Segmented the Banco ABC suite by flow, saving an average of 10 minutes per run.",
+  e3c: "Mentored around 12 QAs and introduced BDD, Gherkin and Page Object. Tracked defect detection and flaky-test rates.",
+  e4When: "Jan 2021 – Jul 2021",
+  e4a: "Siemens (~200 cases): UI and API with Java and Selenium, performance with K6.",
+  e4b: "Vale (~300 to 400 cases): UI with Cypress and JavaScript for an ore-enrichment platform, load with JMeter.",
+  e5When: "Oct 2019 – Dec 2020",
+  e5a: "Automated the 50 most critical weekly regression scenarios with Cypress, eliminating Saturday shifts.",
+  e5b: "Took part in the Azure DevOps rollout in the Integrador PBM squad.",
+  eduTitle: "Education",
+  edu1When: "expected 2027", edu1: "Bachelor's in Computer Science", edu1P: "Estácio, Ceará · in progress",
+  cert1When: "Jun 2020",
+  langK: "Languages", langs: "Portuguese (native) · English (fluent) · Spanish (intermediate)",
+  contactTitle: "Let's talk?",
+  contactLead: "I am open to full-time and contract roles as a Senior QA or SDET, focused on test automation, APIs and performance. I look forward to hearing from you."
+};
+var MENU_LABELS = {
+  pt: { open: "Menu", close: "Fechar" },
+  en: { open: "Menu", close: "Close" }
+};
+
+(function () {
+  var PT = {};
+  document.querySelectorAll('[data-i18n]').forEach(function (el) {
+    var k = el.getAttribute('data-i18n');
+    if (!(k in PT)) PT[k] = el.innerHTML;
+  });
+  document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+    var k = el.getAttribute('data-i18n-aria');
+    if (!(k in PT)) PT[k] = el.getAttribute('aria-label');
+  });
+
+  var lang = 'pt';
+  var rail = document.getElementById('rail');
+  var btn = document.getElementById('menu-btn');
+
+  function t(k) { return lang === 'en' && EN[k] != null ? EN[k] : PT[k]; }
+  function menuLabel() {
+    var l = MENU_LABELS[lang];
+    btn.textContent = rail.classList.contains('open') ? l.close : l.open;
+  }
+  function applyLang(next) {
+    lang = next;
+    document.documentElement.lang = next === 'en' ? 'en' : 'pt-BR';
+    document.title = next === 'en' ? 'Wylker Reis · Senior QA (SDET)' : 'Wylker Reis · QA Sênior (SDET)';
+    document.querySelectorAll('[data-href-en]').forEach(function (a) {
+      if (!a.hasAttribute('data-href-pt')) a.setAttribute('data-href-pt', a.getAttribute('href'));
+      a.setAttribute('href', next === 'en' ? a.getAttribute('data-href-en') : a.getAttribute('data-href-pt'));
+    });
+    document.querySelectorAll('[data-i18n]').forEach(function (el) {
+      el.innerHTML = t(el.getAttribute('data-i18n'));
+    });
+    document.querySelectorAll('[data-i18n-aria]').forEach(function (el) {
+      el.setAttribute('aria-label', t(el.getAttribute('data-i18n-aria')));
+    });
+    document.querySelectorAll('.lang button').forEach(function (b) {
+      b.setAttribute('aria-pressed', b.getAttribute('data-lang') === next ? 'true' : 'false');
+    });
+    menuLabel();
+    try { localStorage.setItem('portfolio-lang', next); } catch (e) {}
+  }
+  document.querySelectorAll('.lang button').forEach(function (b) {
+    b.addEventListener('click', function () { applyLang(b.getAttribute('data-lang')); });
+  });
+  var saved = null;
+  try { saved = localStorage.getItem('portfolio-lang'); } catch (e) {}
+  if (!saved && /^en\b/i.test(navigator.language || '')) saved = 'en';
+  if (saved === 'en') applyLang('en'); else document.documentElement.lang = 'pt-BR';
+
+  var links = rail.querySelectorAll('nav a');
+  function setOpen(open) {
+    rail.classList.toggle('open', open);
+    btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+    menuLabel();
+  }
+  btn.addEventListener('click', function () { setOpen(!rail.classList.contains('open')); });
+  document.addEventListener('keydown', function (e) {
+    if (e.key === 'Escape' && rail.classList.contains('open')) { setOpen(false); btn.focus(); }
+  });
+
+  var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
+  var clicked = null;
+  function markActive(id) {
+    links.forEach(function (a) {
+      var on = a.getAttribute('href') === '#' + id;
+      a.classList.toggle('is-active', on);
+      if (on) a.setAttribute('aria-current', 'true'); else a.removeAttribute('aria-current');
+    });
+  }
+  links.forEach(function (a) {
+    a.addEventListener('click', function () {
+      clicked = a.getAttribute('href').slice(1);
+      setOpen(false);
+      markActive(clicked);
+    });
+  });
+  ['wheel', 'touchstart', 'keydown'].forEach(function (ev) {
+    window.addEventListener(ev, function () { clicked = null; }, { passive: true });
+  });
+  function current() {
+    var line = window.innerHeight * 0.35;
+    var id = null;
+    sections.forEach(function (s) { if (s.getBoundingClientRect().top <= line) id = s.id; });
+    var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
+    if (atBottom) {
+      if (clicked) {
+        var r = document.getElementById(clicked).getBoundingClientRect();
+        if (r.top < window.innerHeight && r.bottom > 0) return clicked;
+      }
+      return sections[sections.length - 1].id;
+    }
+    return id || sections[0].id;
+  }
+  var ticking = false;
+  function onScroll() {
+    if (ticking) return;
+    ticking = true;
+    requestAnimationFrame(function () { ticking = false; markActive(current()); });
+  }
+  window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', onScroll);
+  markActive(current());
+
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+  document.querySelectorAll('[data-count]').forEach(function (el) {
+    var target = parseInt(el.getAttribute('data-count'), 10);
+    var prefix = el.getAttribute('data-prefix') || '';
+    var suffix = el.getAttribute('data-suffix') || '';
+    if (reduced || isNaN(target)) return;
+    var delay = 1400;
+    el.textContent = prefix + 0 + suffix;
+    setTimeout(function () {
+      var start = null;
+      function step(ts) {
+        if (start === null) start = ts;
+        var p = Math.min((ts - start) / 1000, 1);
+        el.textContent = prefix + Math.round((1 - Math.pow(1 - p, 3)) * target) + suffix;
+        if (p < 1) requestAnimationFrame(step);
+      }
+      requestAnimationFrame(step);
+    }, delay);
+  });
+})();
+</script>
+</body>
+</html>
