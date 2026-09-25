@@ -867,8 +867,13 @@ var MENU_LABELS = {
   });
 
   var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
-  var clicked = null;
+  var clicked = null, travelDir = 0, activeId = null;
+  function pos(id) {
+    for (var i = 0; i < sections.length; i++) if (sections[i].id === id) return i;
+    return -1;
+  }
   function markActive(id) {
+    activeId = id;
     links.forEach(function (a) {
       var on = a.getAttribute('href') === '#' + id;
       a.classList.toggle('is-active', on);
@@ -878,11 +883,13 @@ var MENU_LABELS = {
   links.forEach(function (a) {
     a.addEventListener('click', function () {
       clicked = a.getAttribute('href').slice(1);
+      travelDir = Math.sign(pos(clicked) - pos(activeId));
       setOpen(false);
+      setTimeout(update, 150);
     });
   });
   ['wheel', 'touchstart', 'keydown'].forEach(function (ev) {
-    window.addEventListener(ev, function () { clicked = null; }, { passive: true });
+    window.addEventListener(ev, function () { clicked = null; travelDir = 0; }, { passive: true });
   });
   function current() {
     var line = window.innerHeight * 0.35;
@@ -890,19 +897,23 @@ var MENU_LABELS = {
     sections.forEach(function (s) { if (s.getBoundingClientRect().top <= line) id = s.id; });
     var atBottom = window.innerHeight + window.scrollY >= document.documentElement.scrollHeight - 4;
     if (atBottom) {
-      if (clicked) {
-        var r = document.getElementById(clicked).getBoundingClientRect();
-        if (r.top < window.innerHeight && r.bottom > 0) return clicked;
-      }
-      return sections[sections.length - 1].id;
+      if (!clicked) return sections[sections.length - 1].id;
+      var r = document.getElementById(clicked).getBoundingClientRect();
+      if (r.top < window.innerHeight && r.bottom > 0) return clicked;
     }
     return id || sections[0].id;
+  }
+  function update() {
+    var next = current();
+    if (travelDir && Math.sign(pos(next) - pos(activeId)) === -travelDir) return;
+    if (next === clicked) travelDir = 0;
+    markActive(next);
   }
   var ticking = false;
   function onScroll() {
     if (ticking) return;
     ticking = true;
-    requestAnimationFrame(function () { ticking = false; markActive(current()); });
+    requestAnimationFrame(function () { ticking = false; update(); });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
   window.addEventListener('resize', onScroll);
