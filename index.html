@@ -868,6 +868,11 @@ var MENU_LABELS = {
 
   var sections = Array.prototype.slice.call(document.querySelectorAll('main section[id]'));
   var clicked = null;
+  var locked = false, lockTimer = null;
+  function releaseLockSoon(ms) {
+    clearTimeout(lockTimer);
+    lockTimer = setTimeout(function () { locked = false; markActive(current()); }, ms);
+  }
   function markActive(id) {
     links.forEach(function (a) {
       var on = a.getAttribute('href') === '#' + id;
@@ -878,12 +883,17 @@ var MENU_LABELS = {
   links.forEach(function (a) {
     a.addEventListener('click', function () {
       clicked = a.getAttribute('href').slice(1);
+      locked = true;
       setOpen(false);
       markActive(clicked);
+      releaseLockSoon(300);
     });
   });
   ['wheel', 'touchstart', 'keydown'].forEach(function (ev) {
-    window.addEventListener(ev, function () { clicked = null; }, { passive: true });
+    window.addEventListener(ev, function () {
+      clicked = null;
+      if (locked) { locked = false; clearTimeout(lockTimer); }
+    }, { passive: true });
   });
   function current() {
     var line = window.innerHeight * 0.35;
@@ -901,6 +911,7 @@ var MENU_LABELS = {
   }
   var ticking = false;
   function onScroll() {
+    if (locked) { releaseLockSoon(150); return; }
     if (ticking) return;
     ticking = true;
     requestAnimationFrame(function () { ticking = false; markActive(current()); });
